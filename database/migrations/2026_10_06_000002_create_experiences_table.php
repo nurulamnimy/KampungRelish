@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('experiences', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('vendor_profile_id')->constrained('vendor_profiles')->onDelete('cascade');
+            $table->string('name');
+            $table->string('location');
+            $table->string('category');
+            $table->text('description');
+            $table->string('menu')->nullable();
+            $table->decimal('price', 8, 2);
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('experiences');
+    }
+};
